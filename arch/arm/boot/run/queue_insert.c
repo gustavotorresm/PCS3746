@@ -11,7 +11,7 @@ int main() {
 
 	while(1) {
 		int value = rand();
-		long waitTime = random() % 10 + 5;
+		long waitTime = random() % 5 + 1;
 
 		syscall(QUEUE_INSERT, value, NULL);
 		sleep(waitTime);

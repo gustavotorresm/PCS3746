@@ -11,10 +11,9 @@
 #include <linux/list.h>
 #include <linux/slab.h>
 
-/* Creates the head node */
+/* Creates an empty queue */
+unsigned int queue_elements = 0;
 LIST_HEAD(head);
-
-QUEUE queue = {.elements=0};
 
 /**
  * Inserts a long value into the queue.
@@ -23,32 +22,34 @@ QUEUE queue = {.elements=0};
 asmlinkage long sys_insert(long value) {
 	QUEUE_NODE *newNode;
 
-	if (!queue.head. next || !queue.head.prev) {
-		&queue.head = &head;
-	}
-
 	newNode = kmalloc(sizeof *newNode, GFP_KERNEL);
 	newNode->value = value;
-	INIT_LIST_HEAD(&newNode->list);
+	INIT_LIST_HEAD(&newNode->list);	
 
-	printk("Insert %ld into Levy Queue!!\n", newNode->value);
-	list_add_tail(&newNode->list, &queue.head);
+	printk("[kernel] Insert %ld into System Queue!!\n", newNode->value);
+	list_add_tail(&newNode->list, &head);
 
-	queue.elements++;
-	printk("Levy queue has currently %d element(s)\n", queue.elements);
+	queue_elements++;
+	printk("[kernel] System queue has currently %d element(s)\n", queue_elements);
+
 	return 0;
 }
 
 asmlinkage long sys_remove(void) {
 	QUEUE_NODE *node;
+	long value;
 
-	if (queue.elements < 1) {
-		printk("Queue is empty");
+	if (queue_elements < 1) {
+		printk("[kernel] Queue is empty\n");
 		return -1;
 	}
 
-	node = list_first_entry(&queue.head, QUEUE_NODE, list);
+	node = list_first_entry(&head, QUEUE_NODE, list);
+	value =  node->value;
+	list_del(&node->list);
+	kfree(node);
+	queue_elements--;
 
-	printk("Remove value %ld from Levy Queue!!\n", node->value);
-	return 0;
+	printk("[kernel] Remove value %ld from System Queue!!\n", value);
+	return value;
 }

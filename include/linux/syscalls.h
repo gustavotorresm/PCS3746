@@ -853,7 +853,7 @@ typedef struct QUEUE_NODE {
 
 typedef struct QUEUE {
 	int elements;
-	struct list_head head;
+	struct QUEUE_NODE *head;
 } QUEUE;
 
 asmlinkage long sys_insert(long value);
