@@ -10,10 +10,16 @@ int main() {
 	srand(time(NULL));
 
 	while(1) {
-		int value = rand();
+		long value;
 		long waitTime = random() % 10 + 5;
 
-		syscall(QUEUE_REMOVE, value, NULL);
+		value = syscall(QUEUE_REMOVE, 0, NULL);
+		if (value == -1) {
+			printf("[remove] Could not fetch value from queue\n");
+		} else {
+			printf("[remove] Remove returned value %lu\n", value);
+		}
+		
 		sleep(waitTime);
 	}
 

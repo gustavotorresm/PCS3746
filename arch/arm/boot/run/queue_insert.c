@@ -13,6 +13,7 @@ int main() {
 		int value = rand();
 		long waitTime = random() % 5 + 1;
 
+		printf("[insert] Call insert with value %lu\n", value);
 		syscall(QUEUE_INSERT, value, NULL);
 		sleep(waitTime);
 	}

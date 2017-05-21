@@ -8,15 +8,6 @@
 void main() {
 	pid_t pid;
 
-	
-
-	// Runs insert
-	pid = fork();
-	if (pid == 0) {
-		/* Child process */
-		execve("insert", 0, NULL);
-	} 
-
 	//Runs remove
 	pid = fork();
 	if (pid == 0) {
@@ -24,6 +15,12 @@ void main() {
 		execve("remove", 0, NULL);
 	} 
 
+	// Runs insert
+	pid = fork();
+	if (pid == 0) {
+		/* Child process */
+		execve("insert", 0, NULL);
+	} 
 
 	while(1);
 }
