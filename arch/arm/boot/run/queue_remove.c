@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "queue.h"
+#include "custom_syscalls.h"
 
 int main() {
 	srand(time(NULL));

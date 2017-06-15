@@ -8,18 +8,22 @@
 void main() {
 	pid_t pid;
 
+	
+
 	//Runs remove
 	pid = fork();
 	if (pid == 0) {
 		/* Child process */
-		execve("remove", 0, NULL);
+		char *argv[] = {"1", NULL};
+		execve("dummy_process", argv, NULL);;
 	} 
 
 	// Runs insert
 	pid = fork();
 	if (pid == 0) {
 		/* Child process */
-		execve("insert", 0, NULL);
+		char *argv[] = {"2", NULL};
+		execve("dummy_process", argv, NULL);
 	} 
 
 	while(1);

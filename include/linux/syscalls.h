@@ -858,4 +858,7 @@ typedef struct QUEUE {
 
 asmlinkage long sys_insert(long value);
 asmlinkage long sys_remove(void);
+
+asmlinkage long sys_leia(void);
+asmlinkage long sys_escreva(long value);
 #endif

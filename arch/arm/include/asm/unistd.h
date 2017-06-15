@@ -405,6 +405,9 @@
 #define __NR_insert			(__NR_SYSCALL_BASE+374)
 #define __NR_remove 		(__NR_SYSCALL_BASE+375)
 
+#define __NR_leia 			(__NR_SYSCALL_BASE+376)
+#define __NR_escreva		(__NR_SYSCALL_BASE+377)
+
 /*
  * The following SWIs are ARM private.
  */
