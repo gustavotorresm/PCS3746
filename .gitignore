@@ -78,3 +78,8 @@ GTAGS
 *.orig
 *~
 \#*#
+
+# Custom gitignore
+arch/arm/boot/run/out/*
+arch/arm/boot/run/rootfs
+arch/arm/boot/run/output.txt
