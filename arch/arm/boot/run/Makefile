@@ -18,7 +18,7 @@ out/remove: queue_remove.c
 	$(GCC) -static $(CFLAGS) $(INCLUDES) $< -o $@ 
 
 out/dummy_process: dummy_process.c
-	$(GCC) -static $(CFLAGS) -D_POSIX_C_SOURCE=199309L $(INCLUDES) $< -o $@ 
+	$(GCC) -static $(CFLAGS) -pthread -D_POSIX_C_SOURCE=199309L $(INCLUDES) $< -o $@ 
 
 
 build: clean out/init out/dummy_process
