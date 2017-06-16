@@ -20,8 +20,11 @@ out/remove: queue_remove.c
 out/dummy_process: dummy_process.c
 	$(GCC) -static $(CFLAGS) -pthread -D_POSIX_C_SOURCE=199309L $(INCLUDES) $< -o $@ 
 
+out/peterson: peterson.c
+	$(GCC) -static $(CFLAGS) -pthread -D_POSIX_C_SOURCE=199309L $(INCLUDES) $< -o $@ 
 
-build: clean out/init out/dummy_process
+
+build: clean out/init out/dummy_process out/peterson
 	cd out && find . -depth -print | cpio -o --format=newc > ../rootfs
 
 
