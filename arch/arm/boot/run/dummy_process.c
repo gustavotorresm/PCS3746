@@ -9,8 +9,8 @@
 void wait_random() {
 
 	struct timespec wait_time;
-	wait_time.tv_sec = 0;
-	wait_time.tv_nsec = 400000000;
+	wait_time.tv_sec = random() % 5;
+	wait_time.tv_nsec = 500000000;
 
 	nanosleep(&wait_time, NULL);
 }
@@ -18,13 +18,14 @@ void wait_random() {
 void iterate_long_loop() {
 	srand(time(NULL));
 
-	long iterations = random() % 1000000;
+	long iterations = random() % 5000000;
 	for(int i = 0; i < iterations; ++i) {
 
 	}
 }
 
 int main(int argc, char** argv) {
+	srand(time(NULL));
 	char* process_number = argv[0];
 
 	while(1) {

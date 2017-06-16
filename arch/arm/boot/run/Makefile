@@ -6,6 +6,8 @@ QUEMUFLAGS = ""
 KERNEL = "../zImage"
 INIT = "/init"
 
+SCENARIO = "peterson"
+
 out/init: init.c
 	$(GCC) -static $(CFLAGS) $(INCLUDES) $< -o $@ 
 
@@ -24,13 +26,13 @@ build: clean out/init out/dummy_process
 
 
 run: build
-	$(QEMU) -M versatilepb -m 128M -kernel $(KERNEL) -serial stdio -initrd rootfs -append "root=/dev/ram rdinit=$(INIT)" $(QEMUFLAGS)
+	$(QEMU) -M versatilepb -m 128M -kernel $(KERNEL) -serial stdio -initrd rootfs -append "root=/dev/ram rdinit=$(INIT) $(SCENARIO)" $(QEMUFLAGS)
 
 run_terminal: build
-	$(QEMU) -M versatilepb -m 128M -kernel $(KERNEL) -initrd rootfs -append "root=/dev/ram rdinit=$(INIT) console=ttyAMA0  console=ttyS0" $(QEMUFLAGS)
+	$(QEMU) -M versatilepb -m 128M -kernel $(KERNEL) -initrd rootfs -append "root=/dev/ram rdinit=$(INIT) $(SCENARIO) console=ttyAMA0  console=ttyS0" $(QEMUFLAGS)
 
 debug: build
-	$(QEMU) -M versatilepb -m 128M -kernel $(KERNEL) -initrd rootfs -append "root=/dev/ram rdinit=$(INIT)" -s -S
+	$(QEMU) -M versatilepb -m 128M -kernel $(KERNEL) -initrd rootfs -append "root=/dev/ram rdinit=$(INIT) $(SCENARIO)" -s -S
 
 clean:
 	rm -f out/*
