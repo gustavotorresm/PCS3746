@@ -8,6 +8,12 @@
 
 #include "custom_syscalls.h"
 
+int scheduler_disabled = 0;
+
+int is_scheduler_disabled(int argc, char** argv) {
+	return argc < 2 || argv[1] == NULL;
+}
+
 void wait_random() {
 	#define MILISECOND 1000000
 
@@ -30,16 +36,21 @@ void *run(void *args) {
 	char *process_number = (char*) args;
 	printf("Process %s\n", process_number);
 
+	if (scheduler_disabled)
+		syscall(378, NULL, NULL);
+
 	while(1) {
 		long value;
 
 		value = syscall(LEIA, 0, NULL);
-		printf("[Process %s] %d\n",process_number, value);
+		if (!scheduler_disabled)
+			printf("[Process %s] %d\n",process_number, value);
 		iterate_long_loop();
 		value += 1;
 		syscall(ESCREVA, value);
 
-		wait_random();
+		if (!scheduler_disabled)
+			wait_random();
 	}
 }
 
@@ -53,6 +64,8 @@ void create_process(pthread_t* process, const char process_number[]) {
 }
 
 int main(int argc, char** argv) {
+	scheduler_disabled = is_scheduler_disabled(argc, argv);
+
 	srand(time(NULL));
 	pthread_t process1, process2;
 

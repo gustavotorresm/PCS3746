@@ -4068,6 +4068,12 @@ pick_next_task(struct rq *rq)
 	BUG(); /* the idle class will always have a runnable task */
 }
 
+asmlinkage void __sched fake_schedule(void) {
+	if (!disable_scheduler) {
+		schedule();
+	}
+}
+
 /*
  * schedule() is the main scheduler function.
  */

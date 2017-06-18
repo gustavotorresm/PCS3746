@@ -1447,7 +1447,8 @@ signed long __sched schedule_timeout(signed long timeout)
 		 * but I' d like to return a valid offset (>=0) to allow
 		 * the caller to do everything it want with the retval.
 		 */
-		schedule();
+		if (!disable_scheduler)
+			schedule();
 		goto out;
 	default:
 		/*
@@ -1470,7 +1471,8 @@ signed long __sched schedule_timeout(signed long timeout)
 
 	setup_timer_on_stack(&timer, process_timeout, (unsigned long)current);
 	__mod_timer(&timer, expire, false, TIMER_NOT_PINNED);
-	schedule();
+	if (!disable_scheduler)
+		schedule();
 	del_singleshot_timer_sync(&timer);
 
 	/* Remove the timer from the object tracker */

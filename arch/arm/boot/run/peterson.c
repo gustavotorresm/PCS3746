@@ -21,15 +21,15 @@ void wait_random() {
 	wait_time.tv_sec = random() % 5;
 	wait_time.tv_nsec = 500 * MILISECOND;
 
-	nanosleep(&wait_time, NULL);
+	//nanosleep(&wait_time, NULL);
 }
 
 void iterate_long_loop() {
 
-	long iterations = 10000000;
-	for(int i = 0; i < iterations; ++i) {
+	// long iterations = 10000000;
+	// for(int i = 0; i < iterations; ++i) {
 
-	}
+	// }
 }
 
 void *run(void *args) {
@@ -76,6 +76,8 @@ int main(int argc, char** argv) {
 	turn = 1;
 	create_process(&process1, "1");
 	create_process(&process2, "2");
+
+	printf("Disabling scheduler\n");
 
 	pthread_join(process1, NULL);
 	pthread_join(process2, NULL);

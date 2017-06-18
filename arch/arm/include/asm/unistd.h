@@ -407,6 +407,7 @@
 
 #define __NR_leia 			(__NR_SYSCALL_BASE+376)
 #define __NR_escreva		(__NR_SYSCALL_BASE+377)
+#define __NR_toggle_scheduler	(__NR_SYSCALL_BASE+378)
 
 /*
  * The following SWIs are ARM private.
