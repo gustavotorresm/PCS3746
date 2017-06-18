@@ -30,9 +30,7 @@ void verify_racing_condition() {
 
 asmlinkage long sys_leia() {
 	if (disable_scheduler) {
-		disable_scheduler = 0;
 		schedule();
-		disable_scheduler = 1;
 	}
 
 	read_without_write_pid = current->pid;
@@ -42,9 +40,7 @@ asmlinkage long sys_leia() {
 
 asmlinkage long sys_escreva(long value) {
 	if (disable_scheduler) {
-		disable_scheduler = 0;
 		schedule();
-		disable_scheduler = 1;
 	}
 
 	verify_racing_condition();

@@ -43,8 +43,7 @@ void *run(void *args) {
 		long value;
 
 		value = syscall(LEIA, 0, NULL);
-		if (!scheduler_disabled)
-			printf("[Process %s] %d\n",process_number, value);
+		printf("[Process %s] %d\n",process_number, value);
 		iterate_long_loop();
 		value += 1;
 		syscall(ESCREVA, value);
