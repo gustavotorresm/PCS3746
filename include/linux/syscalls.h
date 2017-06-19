@@ -861,5 +861,5 @@ asmlinkage long sys_remove(void);
 
 asmlinkage long sys_leia(void);
 asmlinkage long sys_escreva(long value);
-asmlinkage long sys_toggle_scheduler(void);
+asmlinkage long sys_disable_scheduler(void);
 #endif

@@ -49,7 +49,7 @@ asmlinkage long sys_escreva(long value) {
 	return 0;
 }
 
-asmlinkage long sys_toggle_scheduler() {
+asmlinkage long sys_disable_scheduler() {
 	disable_scheduler = 1;
 	return 0;
 }

@@ -37,7 +37,7 @@ void *run(void *args) {
 	printf("Process %s\n", process_number);
 
 	if (scheduler_disabled)
-		syscall(378, NULL, NULL);
+		syscall(DISABLE_SCHEDULER, NULL, NULL);
 
 	while(1) {
 		long value;

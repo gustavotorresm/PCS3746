@@ -4069,10 +4069,6 @@ pick_next_task(struct rq *rq)
 }
 
 asmlinkage void __sched fake_schedule(void) {
-	if (!disable_scheduler) {
-		schedule();
-		return;
-	}
 
 	struct task_struct *prev, *next;
 	unsigned long *switch_count;
@@ -4085,6 +4081,11 @@ fake_need_resched:
 	rq = cpu_rq(cpu);
 	rcu_note_context_switch(cpu);
 	prev = rq->curr;
+
+	if (!disable_scheduler || (prev->pid != 17 && prev->pid != 18)) {
+		schedule();
+		return;
+	}
 
 	schedule_debug(prev);
 

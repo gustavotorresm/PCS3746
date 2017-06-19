@@ -44,7 +44,7 @@ void *run(void *args) {
 	int other_process = (1 - process_id) % 2;
 
 	if (scheduler_disabled)
-		syscall(378, NULL, NULL);
+		syscall(DISABLE_SCHEDULER, NULL, NULL);
 
 	while(1) {
 		long value;
