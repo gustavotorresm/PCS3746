@@ -1,0 +1,1 @@
+obj-$(CONFIG_DRIVER_PADRAO) += driver.o

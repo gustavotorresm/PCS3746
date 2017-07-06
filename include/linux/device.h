@@ -536,7 +536,10 @@ static inline void device_unlock(struct device *dev)
 	mutex_unlock(&dev->mutex);
 }
 
+#ifndef DRIVER_INIT
+#define DRIVER_INIT
 void driver_init(void);
+#endif
 
 /*
  * High level routines for use by the bus drivers

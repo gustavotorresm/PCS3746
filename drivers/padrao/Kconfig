@@ -1,0 +1,6 @@
+config DRIVER_PADRAO
+tristate "Driver padrao" 
+depends on ARM
+default y if ARM
+help
+  driver padrao module
