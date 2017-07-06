@@ -8,7 +8,7 @@
 #include <asm/uaccess.h>
 
 #define MAJOR_NUMBER 666
-#define MINOR_NUMBER 1
+#define MINOR_NUMBER 0
 #define BUFFER_SIZE 240
 
 static ssize_t driver_fs_read(struct file * file, char * buf, size_t length, loff_t *ppos);
@@ -39,10 +39,12 @@ int __init driver_padrao_init(void) {
     struct cdev c_dev;
     struct file_operations fops;
 
-    if (alloc_chrdev_region(&first, 0, 1, "levy") < 0) {
-        printk("Could not allocate device region\n");
-        return -1;
+    if (register_chrdev(MAJOR_NUMBER, "levy", &driver_fops)) {
+        printk ("Driver could not get major %d\n", MAJOR_NUMBER);
+        return -EIO;
     }
+
+    first = MKDEV(MAJOR_NUMBER, MINOR_NUMBER);
 
     if ((cl = class_create(THIS_MODULE, "driver")) == NULL) {
         unregister_chrdev_region(first, 1);

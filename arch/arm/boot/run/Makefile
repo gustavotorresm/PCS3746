@@ -29,7 +29,7 @@ out/bash: run-bash.c
 	cp bash out/bash 
 
 build: clean out/init driver/driver.ko
-	cp driver/driver.o out/driver.ko
+	cp driver/driver.ko out/driver.ko
 	cd out && find . -depth -print | cpio -o --format=newc > ../rootfs
 
 

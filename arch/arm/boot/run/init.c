@@ -28,12 +28,13 @@ const int get_scheduler(int argc, char* argv[]) {
 } 
 
 const void create_node(void) {
-    dev_t dev = MKDEV(60, 0);
-    int rc = mknod("/dev/levy", 'c', dev);
+    dev_t dev = MKDEV(666, 0);
+    int rc = mknod("/dev/driver", 'c', dev);
+    printf("Created node %d\n", rc);
 }
 
 const void load_module(void) {
-    int fd = open("/driver.ko", O_RDONLY);
+    int fd = open("driver.ko", O_RDONLY);
     struct stat st;
     fstat(fd, &st);
     size_t image_size = st.st_size;
@@ -49,26 +50,14 @@ void main(int argc, char* argv[]) {
     create_node();
     load_module();
 
-    DIR           *d;
-    struct dirent *dir;
-    d = opendir(".");
-    if (d)
-    {
-      while ((dir = readdir(d)) != NULL)
-      {
-        printf("%s\n", dir->d_name);
-      }
-
-      closedir(d);
-    }
 
     unsigned char buffer[8];
-    FILE *file = fopen("/dev/levy", "rw");
+    int fd = open("/dev/levy", O_RDONLY);
 
-    printf("%d\n", file);
+    int x = read(fd, buffer, 8);
+    close(fd);
 
-    fread(buffer, sizeof buffer, 1, file);
-
+    printf("OOOO %d\n", x);
     printf("HAHA: %s\n", buffer);
     
     // const char *scenario = get_scenario(argc, argv);
