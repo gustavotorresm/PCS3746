@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+#include <sys/syscall.h>
 #include <dirent.h> 
 #include <string.h>
 #include <linux/types.h>
@@ -28,9 +29,12 @@ const int get_scheduler(int argc, char* argv[]) {
 } 
 
 const void create_node(void) {
-    dev_t dev = MKDEV(666, 0);
-    int rc = mknod("/dev/driver", 'c', dev);
-    printf("Created node %d\n", rc);
+    dev_t dev = MKDEV(666, 1);
+    if (mknod("/dev/driver", 'c', dev) != 0) {
+        printf("Could not create device\n");
+        exit(-1);
+    }
+    printf("Created node\n");
 }
 
 const void load_module(void) {
@@ -47,28 +51,19 @@ const void load_module(void) {
 }
 
 void main(int argc, char* argv[]) {
-    create_node();
-    load_module();
 
+    while (1) 
+        if (!fork()) {
+            int *p = 0x1;
+            int i;
 
-    unsigned char buffer[8];
-    int fd = open("/dev/levy", O_RDONLY);
+            printf("HAHAHA\n");
 
-    int x = read(fd, buffer, 8);
-    close(fd);
+            for (i = 0; i < 10000; ++i);
 
-    printf("OOOO %d\n", x);
-    printf("HAHA: %s\n", buffer);
-    
-    // const char *scenario = get_scenario(argc, argv);
-    // const int scheduler_enabled = get_scheduler(argc, argv);
+            syscall(374, 2, NULL);
 
-    // printf("Using scenario %s with scheduler %s.\n", scenario, scheduler_enabled ? "enabled" : "disabled");
-
-    // char *scheduler_status = scheduler_enabled ? "true": NULL;
-    // const char *args[] = {scenario, scheduler_status, NULL};
-    // execve(scenario, args, NULL);
-
-    while(1);
+            printf("%d\n", *p);
+        }
 }
 

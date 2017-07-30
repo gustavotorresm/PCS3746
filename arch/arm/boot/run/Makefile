@@ -28,10 +28,8 @@ out/bash: run-bash.c
 	$(GCC) -static $(CFLAGS) $(INCLUDES) $< -o $@ 
 	cp bash out/bash 
 
-build: clean out/init driver/driver.ko
-	cp driver/driver.ko out/driver.ko
+build: clean out/init 
 	cd out && find . -depth -print | cpio -o --format=newc > ../rootfs
-
 
 run: build
 	$(QEMU) -M versatilepb -m 256M -kernel $(KERNEL) -serial stdio -initrd rootfs -append "root=/dev/ram rdinit=$(INIT) $(SCENARIO) $(SCHEDULER)" $(QEMUFLAGS)
