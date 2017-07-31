@@ -26,11 +26,11 @@ asmlinkage long sys_insert(long value) {
 	newNode->value = value;
 	INIT_LIST_HEAD(&newNode->list);	
 
-	printk("[kernel] Insert %ld into System Queue!!\n", newNode->value);
+	//printk("[kernel] Insert %ld into System Queue!!\n", newNode->value);
 	list_add_tail(&newNode->list, &head);
 
 	queue_elements++;
-	printk("[kernel] System queue has currently %d element(s)\n", queue_elements);
+	//printk("[kernel] System queue has currently %d element(s)\n", queue_elements);
 
 	return 0;
 }

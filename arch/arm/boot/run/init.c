@@ -8,6 +8,9 @@
 #include <linux/types.h>
 #include <linux/kdev_t.h>
 
+#include <signal.h>
+#include <unistd.h>
+
 const char* get_scenario(int argc, char* argv[]) {
     if (argc < 2) {
         return "peterson";
@@ -50,6 +53,14 @@ const void load_module(void) {
     }
 }
 
+void signal_handler(int signal) {
+    if (signal == SIGSEGV) {
+        printf("Segmentation fault capturado %d\n", signal);
+    }
+
+    exit(0);
+}
+
 void main(int argc, char* argv[]) {
 
     while (1) 
@@ -57,11 +68,10 @@ void main(int argc, char* argv[]) {
             int *p = 0x1;
             int i;
 
-            printf("HAHAHA\n");
-
             for (i = 0; i < 10000; ++i);
 
             syscall(374, 2, NULL);
+            signal(11, signal_handler);
 
             printf("%d\n", *p);
         }
